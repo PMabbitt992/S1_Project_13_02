@@ -39,60 +39,76 @@
 
 
 /* ===================================================================== */
-
+//run init on webpage load
 window.onload = init();
 
 function init() {
+      // for each button clicked, determine the value
       var calcButtons = document.querySelectorAll("input.calcButton");
       for (var i = 0; i < calcButtons.length; i++) {
             // calcButtons.onclick = buttonClick();
             calcButtons[i].addEventListener("click", buttonClick);
       }
+      //listen for the keydown event
       document.getElementById("calcWindow").addEventListener("keydown", calcKeys);
 }
 
 function buttonClick(e) {
+      //calcValue is equal to the value of the calculation window and calcDecimal is equal to the decimal counter
       var calcValue = document.getElementById("calcWindow").value;
       var calcDecimal = document.getElementById("decimals").value;
+      //buttonValue is equal to the clicked buttons value
       var buttonValue = e.target.value;
+      //for the button pressed that has the value of _______ run _____
       switch (buttonValue) {
             case "del":
+                  //for delete make the window blank
                   calcValue = "";
                   break;
+                  //for bskp run eraseChar using calcvalue as a parameter
             case "bksp":
                   calcValue = eraseChar(calcValue);
                   break;
+                  //for enter, run evalEq using calcValue and calcDecimal
             case "enter":
-                  calcValue = " = " + evalEq(calcValue, calcDecimal) + "\n";
+                  calcValue += " = " + evalEq(calcValue, calcDecimal) + "\n";
                   break;
+                  //for prev, run lastEq using calcValue
             case "prev":
-                  calcValue = lastEq(calcValue);
+                  calcValue += lastEq(calcValue);
                   break;
+                  //if no special key is clicked, calcValue is equal to itself plus the buttonValue
             default:
                   calcValue = calcValue + buttonValue;
 
       }
+      //for calcWindow, the value is equal to calcvalue
       document.getElementById("calcWindow").value = calcValue;
+      //puts the cursor in the calc window
       document.getElementById("calcWindow").focus();
-      console.log(lastEq(calcValue));
 }
 
 function calcKeys(e) {
+      //calcValue is equal to the value of the calculation window and calcDecimal is equal to the decimal counter
       var calcValue = document.getElementById("calcWindow").value;
       var calcDecimal = document.getElementById("decimals").value;
+      //for the keyboard button pressed that has the value of _______ run _____
       switch (e.key) {
+            //for delete make the window blank
             case "Delete":
                   calcValue = "";
                   break;
             case "Enter":
-                  calcValue + " = " + evalEq(calcValue, calcDecimal);
+                  //for enter, run evalEq using calcValue and calcDecimal
+                  calcValue += " = " + evalEq(calcValue, calcDecimal);
                   break;
+                  //for prev, run lastEq using calcValue
             case "ArrowUp":
-                  calcVule + lastEq(calcWindow.value);
-                  "ArrowUp".preventDefault();
+                  calcValue += lastEq(calcWindow.value);
+                  e.preventDefault();
                   break;
-                  Z
       }
+      //for calcWindow, the value is equal to calcvalue
       document.getElementById("calcWindow").value = calcValue;
 }
 
